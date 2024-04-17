@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package AuthSrv;
+
+option go_package = "./proto;AuthSrv";
+
+service AuthSrv {
+	rpc CreatePerson(CreatePersonRequest) returns (CreatePersonResponse) {}
+	rpc GetPersonByTelegramID(GetPersonByTelegramIDRequest) returns (GetPersonByTelegramIDResponse) {}
+	rpc CheckPersonExistByTelegramID(CheckPersonExistByTelegramIDRequest) returns (CheckPersonExistByTelegramIDResponse) {}
+	rpc GetNearValidators(GetNearValidatorsRequest) returns (GetNearValidatorsResponse) {}
+	rpc SetAdmin(SetAdminRequest) returns (SetAdminResponse) {}
+
+
+}
+
+
+
+
+message CheckPersonExistByTelegramIDRequest {
+	int64 telegramID = 1; 
+}
+
+message CheckPersonExistByTelegramIDResponse {
+	bool result =1;
+}
+
+
+
+//---------------------------------------
+message Person {
+	int64 telegramID = 2 ; 
+	string firstName = 3 ; 
+	string lastName = 4 ; 
+	string language = 5 ; 
+	string telegramLanguage = 6 ; 
+	string mainPasswordHash = 7 ; 
+	string fakePasswordHash = 8 ;  
+	double locationLat = 9;
+	double locationLon = 10;
+}
+
+message CreatePersonRequest {
+	Person person = 1 ; 
+}
+
+message CreatePersonResponse {
+	string msg = 1 ; 
+}
+
+message GetPersonByTelegramIDRequest {
+	int64 telegramID = 1; 
+	string PasswordHash = 2;
+}
+
+message GetPersonByTelegramIDResponse {
+	Person person = 1 ; 
+}
+
+message GetNearValidatorsRequest {
+	double locationLat = 1;
+	double locationLon = 2;
+	int64 distance = 3;
+	int32 limit = 4;
+	int32 offset = 5;
+}
+
+message GetNearValidatorsResponse {
+	repeated int64 validators = 1;
+}
+
+message SetAdminRequest {
+	int64 telegramID = 1;
+}
+
+message SetAdminResponse {
+	string msg = 1;
+}
